@@ -108,11 +108,18 @@ if(buttonsPagination) {
       }
 
       if(inputsChecked.length > 0) {
-      const ids = []
+      let ids = []  
       const inputIds = formChangeMulti.querySelector('input[name="ids"]')
 
       inputsChecked.forEach(item => {
-        ids.push(item.value)
+        const id = item.value
+
+        if(typeChange == 'change-position') {
+          const position = item.closest("tr").querySelector("input[name=position]").value
+          ids.push(`${id}-${position}`)
+        } else {
+          ids.push(id)
+        }
       })
 
       inputIds.value = ids.join(", ")
