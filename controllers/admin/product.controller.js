@@ -85,6 +85,7 @@ module.exports.changeMulti = async (req, res) => {
         position = parseInt(position)
         await Product.updateMany({_id:id}, {position})
       }
+      req.flash('success', `Đã thay đổi vị trí ${ids.length} sản phẩm thành công!`);
       // await Product.updateMany({_id:{ $in: ids}}, {deleted: true, deleteAt: new Date()})
       break;
     default:
