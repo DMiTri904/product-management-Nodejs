@@ -36,7 +36,7 @@ module.exports.index = async (req, res) => {
   
 
   const products = await Product.find(find).sort({position: "desc"}).limit(objectPagination.limitItems).skip(objectPagination.skip)
-    
+
 
    res.render('admin/pages/products/index', {
     pageTitle: 'Trang danh sach san pham',
@@ -76,6 +76,8 @@ module.exports.changeMulti = async (req, res) => {
       break;
     case 'delete-all':
       await Product.updateMany({_id:{ $in: ids}}, {deleted: true, deleteAt: new Date()})
+      req.flash('success', `Đã xóa thành công ${ids.length} sản phẩm!`);
+
       break;
     case 'change-position':
       for (const item of ids) {
@@ -103,6 +105,8 @@ module.exports.deleteItem = async (req, res) => {
   // await Product.deleteOne({_id: id})
   // Xóa mềm
   await Product.updateOne({_id: id}, {deleted: true, deleteAt: new Date()})
+  req.flash('success', `Đã xóa sản phẩm thành công!`);
+
   
   res.redirect(req.get('Referer') || '/admin/products')
 }
