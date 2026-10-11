@@ -36,7 +36,7 @@ module.exports.index = async (req, res) => {
   
 
   const products = await Product.find(find).sort({position: "desc"}).limit(objectPagination.limitItems).skip(objectPagination.skip)
-
+    
 
    res.render('admin/pages/products/index', {
     pageTitle: 'Trang danh sach san pham',
@@ -53,6 +53,8 @@ module.exports.changeStatus = async (req, res) => {
   const status = req.params.status
   const id = req.params.id
   await Product.updateOne({_id: id}, {status: status})
+
+  req.flash('success', 'Cập nhật trạng thái sản phẩm thành công!');
   
   res.redirect(req.get('Referer') || '/admin/products')
 }
@@ -66,9 +68,11 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({_id:{ $in: ids}}, {status: `active`})
+      req.flash('success', `Cập nhật trạng thái của ${ids.length} sản phẩm thành công!`);
       break;
     case 'inactive':
       await Product.updateMany({_id:{ $in: ids}}, {status: `inactive`})
+      req.flash('success', `Cập nhật trạng thái của ${ids.length} sản phẩm thành công!`);
       break;
     case 'delete-all':
       await Product.updateMany({_id:{ $in: ids}}, {deleted: true, deleteAt: new Date()})
