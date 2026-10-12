@@ -133,11 +133,10 @@ if(buttonsPagination) {
   // End Form Change Multi
 
   // Show Alert
-  const showAlert = document.querySelector("[show-alert")
+  const showAlert = document.querySelector("[show-alert]")
   if(showAlert) {
-    const time =parseInt(showAlert.getAttribute("data-time"))
-    const closeAlert = showAlert.querySelector("[close-alert")
-    console.log(time);
+    const time = parseInt(showAlert.getAttribute("data-time"))
+    const closeAlert = showAlert.querySelector("[close-alert]")
     setTimeout(() => {
       showAlert.classList.add('alert-hidden')
     }, time)
