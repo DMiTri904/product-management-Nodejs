@@ -1,0 +1,30 @@
+extends ../../layouts/default.pug
+block main
+  .m-2
+    h1(class="mb-4") Thêm mới nhóm quyền
+    form(
+      action=`${prefixAdmin}/roles/create`
+      method="POST"
+    )
+      .form-group
+        label(for="title") Tiêu đề
+        input(
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          required
+        )
+      .form-group.mt-2
+        label(for="desc") Mô tả
+        input(
+          type="text"
+          class="form-control"
+          id="desc"
+          name="description"
+        )
+      .form-group.mt-2
+        button(
+          type="submit"
+          class="btn btn-primary"
+        ) + Thêm
