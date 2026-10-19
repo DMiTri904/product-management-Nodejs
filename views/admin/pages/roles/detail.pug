@@ -1,0 +1,15 @@
+extends ../../layouts/default.pug
+
+block main
+  if(data.title)
+    h1(class="mb-4") #{data.title}
+  if(data.description)
+    div(class="mb-4") Mô tả: <b> #{data.description}</b>
+
+ 
+
+  a(
+    href=`${prefixAdmin}/roles/edit/${data.id}`
+    class="btn btn-warning") Chỉnh sửa 
+
+  script(src="/admin/js/role.js") 

@@ -86,3 +86,41 @@ module.exports.editPatch = async (req, res) => {
   )
   res.redirect(req.get('Referer'))
 }
+
+// [DELETE] /admin/product-category/delete/:id
+module.exports.deleteCategory = async (req, res) => {
+  const id = req.params.id
+  await ProductCategory.updateOne(
+    {
+      _id: id
+    },
+    { deleted: true, deteleAt: new Date() }
+  )
+  req.flash('success', `Đã xóa danh mục thành công!`)
+
+  res.redirect(req.get('Referer') || '/admin/product-category')
+  res.send('ok')
+}
+// [GET] /admin/product-category/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id
+    }
+
+    const data = await ProductCategory.findOne(find)
+    var parent = {}
+    if (data.parent_id) {
+      parent = await ProductCategory.findOne({ _id: data.parent_id })
+    }
+
+    res.render('admin/pages/product-category/detail', {
+      pageTitle: 'Chi tiết danh mục',
+      data,
+      parent
+    })
+  } catch (error) {
+    // return res.redirect(`${systemConfig.prefixAdmin}/product-category`)
+  }
+}
