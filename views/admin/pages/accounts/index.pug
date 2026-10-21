@@ -51,22 +51,10 @@ block main
               td #{item.role.title}
               td #{item.email}
               td
-                if(item.status === "active")
-                  a(
-                    href="javascript:;" 
-                    class="badge bg-success fs-6"
-                    data-status=item.status
-                    data-id=item.id
-                    link-change-status
-                    ) Hoạt động 
-                else
-                  a(
-                    href="javascript:;" 
-                    class="badge bg-danger fs-6"
-                    data-status=item.status
-                    data-id=item.id
-                    link-change-status
-                    ) Dừng hoạt động
+                if(item.status == 'active')
+                  a(href="javascript:;" data-id=item.id data-status=item.status button-change-status class="text-decoration-none badge bg-success") Hoạt động 
+                else 
+                  a(href="javascript:;" data-id=item.id data-status=item.status button-change-status class="text-decoration-none badge bg-danger") Dừng hoạt động 
               td
                 a(
                   class="btn btn-warning btn-sm"
