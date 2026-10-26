@@ -6,8 +6,12 @@ header.header
           a(href='/admin/dashboard') ADMIN 
 
       .col-9
-        div(class='text-right')
+        div(class='text-end')
+          a(
+            href=`${prefixAdmin}/my-account`
+            class='btn btn-primary btn-sm'
+          ) #{user.fullName}
           a(
             href=`${prefixAdmin}/auth/logout`
-            class='btn btn-danger btn-sm'
+            class='btn btn-danger btn-sm ms-1'
           ) Đăng xuất
