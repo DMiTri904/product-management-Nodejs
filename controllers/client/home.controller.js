@@ -8,11 +8,24 @@ module.exports.index = async (req, res) => {
     deleted: false,
     status: 'active'
   }).limit(6)
-  const newProducts = productHelper.priceNewProducts(productsFeatured)
+  const newProductsFeatured = productHelper.priceNewProducts(productsFeatured)
   // Lấy ra sản phẩm nổi bật
+
+  // Hiển thị danh sách sản phẩm mới nhất
+  const productsNew = await Product.find({
+    deleted: false,
+    status: 'active'
+  })
+    .sort({ position: 'desc' })
+    .limit(6)
+
+  const newProductsNew = productHelper.priceNewProducts(productsNew)
+
+  // Hiển thị danh sách sản phẩm mới nhất
 
   res.render('client/pages/home/index', {
     pageTitle: 'Trang chủ',
-    productsFeatured: newProducts
+    productsFeatured: newProductsFeatured,
+    productsNew: newProductsNew
   })
 }
