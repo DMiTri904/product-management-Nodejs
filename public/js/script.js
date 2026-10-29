@@ -12,3 +12,14 @@ if (showAlert) {
   })
 }
 // End Show Alert
+
+// Button Back
+const buttonGoBack = document.querySelectorAll('[button-go-back]')
+if (buttonGoBack.length > 0) {
+  buttonGoBack.forEach(item => {
+    item.addEventListener('click', () => {
+      history.back()
+    })
+  })
+}
+// Button Back
