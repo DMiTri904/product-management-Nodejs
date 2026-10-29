@@ -21,17 +21,7 @@ database.connect()
 const app = express()
 const port = process.env.PORT
 
-app.use(methodOverride('_method'))
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.set('views', `${__dirname}/views`)
-app.set('view engine', 'pug')
-
-//Flash
-app.use(cookieParser('mtrid'))
-app.use(session({ cookie: { maxAge: 60000 } }))
-app.use(flash())
-//End Flash
+app.use(express.static(`${__dirname}/public`))
 
 //TimyMCE
 app.use(
@@ -40,11 +30,21 @@ app.use(
 )
 //End TimyMCE
 
+app.use(methodOverride('_method'))
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.set('views', `${__dirname}/views`)
+app.set('view engine', 'pug')
+
+//Flash
+app.use(cookieParser('mtrid'))
+app.use(session({ secret: 'mtrid', cookie: { maxAge: 60000 } }))
+app.use(flash())
+//End Flash
+
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 app.locals.moment = moment
-
-app.use(express.static(`${__dirname}/public`))
 
 //Routes
 routeAdmin(app)
