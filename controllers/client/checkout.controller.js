@@ -44,11 +44,13 @@ module.exports.order = async (req, res) => {
 
   for (const product of cart.products) {
     const objectProduct = {
-      roduct_id: product.product_id,
+      product_id: product.product_id,
       price: 0,
       discountPercentage: 0,
       quantity: product.quantity
     }
+
+    console.log(objectProduct)
 
     const productInfo = await Product.findOne({
       _id: product.product_id
@@ -77,5 +79,34 @@ module.exports.order = async (req, res) => {
       products: []
     }
   )
-  res.redirect(`/checkout/succes/${order.id}`)
+  res.redirect(`/checkout/success/${order.id}`)
+}
+
+// [GET] /checkout/success/:orderId
+module.exports.success = async (req, res) => {
+  const order = await Order.findOne({
+    _id: req.params.orderId
+  })
+  console.log(order)
+
+  for (const product of order.products) {
+    const productInfo = await Product.findOne({
+      _id: product.product_id
+    }).select('title thumbnail')
+    product.productInfo = productInfo
+
+    product.priceNew = productHelper.priceNewProduct(product)
+    product.totalPrice = product.priceNew * product.quantity
+  }
+
+  order.totalPrice = order.products.reduce(
+    (sum, item) => sum + item.totalPrice,
+    0
+  )
+  // console.log(order)
+
+  res.render('client/pages/checkout/success', {
+    pageTitle: 'Đặt hàng thành công',
+    order
+  })
 }
