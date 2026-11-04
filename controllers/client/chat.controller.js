@@ -2,18 +2,27 @@ const Chat = require('../../models/chat.model')
 const User = require('../../models/user.model')
 // [GET] /chat/
 module.exports.index = async (req, res) => {
-  const user_id = res.locals.user.id
+  const userId = res.locals.user.id
+  const fullName = res.locals.user.fullName
 
   // SocketIO
   _io.once('connection', socket =>
     socket.on('CLIENT_SEND_MESSAGE', async content => {
       const chat = new Chat({
-        user_id: user_id,
+        user_id: userId,
         content
       })
       await chat.save()
+
+      //Trả data về cho Client
+      _io.emit('SERVER_RETURN_MESSAGE', {
+        userId,
+        fullName,
+        content
+      })
     })
   )
+
   // SocketIO
   //Lấy ra data
   const chats = await Chat.find({
