@@ -48,7 +48,31 @@ module.exports.request = async (req, res) => {
   }).select('id fullName avatar')
 
   res.render('client/pages/users/request', {
-    pageTitle: 'Lời mời kết bạn',
+    pageTitle: 'Lời mời đã gửi',
+    users
+  })
+}
+
+// [GET] users/accept
+module.exports.accept = async (req, res) => {
+  //Socket
+  userSocket(res)
+  //Socket
+
+  const userId = res.locals.user.id
+  const myUser = await User.findOne({
+    _id: userId
+  })
+
+  const acceptFriends = myUser.acceptFriends
+  const users = await User.find({
+    _id: { $in: acceptFriends },
+    status: 'active',
+    deleted: false
+  }).select('id fullName avatar')
+
+  res.render('client/pages/users/accept', {
+    pageTitle: 'Lời mời đã nhận',
     users
   })
 }

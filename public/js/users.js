@@ -27,3 +27,19 @@ if (listBtnlistBtnCancelFriend.length > 0) {
   })
 }
 // Chức năng hủy KB
+
+// Chức năng từ chối kết bạn
+const listBtnlistBtnRefuseFriend = document.querySelectorAll(
+  '[btn-refuse-friend]'
+)
+if (listBtnlistBtnRefuseFriend.length > 0) {
+  listBtnlistBtnRefuseFriend.forEach(button => {
+    button.addEventListener('click', () => {
+      button.closest('.box-user').classList.add('refuse')
+      const userId = button.getAttribute('btn-refuse-friend')
+
+      socket.emit('CLIENT_REFUSE_FRIEND', userId)
+    })
+  })
+}
+// Chức năng từ chối kết bạn
