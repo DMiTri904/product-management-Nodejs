@@ -29,11 +29,9 @@ if (listBtnlistBtnCancelFriend.length > 0) {
 // Chức năng hủy KB
 
 // Chức năng từ chối kết bạn
-const listBtnlistBtnRefuseFriend = document.querySelectorAll(
-  '[btn-refuse-friend]'
-)
-if (listBtnlistBtnRefuseFriend.length > 0) {
-  listBtnlistBtnRefuseFriend.forEach(button => {
+const listBtnRefuseFriend = document.querySelectorAll('[btn-refuse-friend]')
+if (listBtnRefuseFriend.length > 0) {
+  listBtnRefuseFriend.forEach(button => {
     button.addEventListener('click', () => {
       button.closest('.box-user').classList.add('refuse')
       const userId = button.getAttribute('btn-refuse-friend')
@@ -43,3 +41,17 @@ if (listBtnlistBtnRefuseFriend.length > 0) {
   })
 }
 // Chức năng từ chối kết bạn
+
+// Chức năng chấp nhận kết bạn
+const listBtnAcceptFriend = document.querySelectorAll('[btn-accept-friend]')
+if (listBtnAcceptFriend.length > 0) {
+  listBtnAcceptFriend.forEach(button => {
+    button.addEventListener('click', () => {
+      button.closest('.box-user').classList.add('accepted')
+      const userId = button.getAttribute('btn-accept-friend')
+
+      socket.emit('CLIENT_ACCEPT_FRIEND', userId)
+    })
+  })
+}
+// Chức năng chấp nhận kết bạn
