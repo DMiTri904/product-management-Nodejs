@@ -11,3 +11,19 @@ if (listBtnAddFriend.length > 0) {
   })
 }
 // Chức năng gửi yêu cầu
+
+// Chức năng hủy KB
+const listBtnlistBtnCancelFriend = document.querySelectorAll(
+  '[btn-cancel-friend]'
+)
+if (listBtnlistBtnCancelFriend.length > 0) {
+  listBtnlistBtnCancelFriend.forEach(button => {
+    button.addEventListener('click', () => {
+      button.closest('.box-user').classList.remove('add')
+      const userId = button.getAttribute('btn-cancel-friend')
+
+      socket.emit('CLIENT_CANCEL_FRIEND', userId)
+    })
+  })
+}
+// Chức năng hủy KB
